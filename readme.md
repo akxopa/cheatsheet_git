@@ -21,7 +21,7 @@
 `git commit -m 'Какие изменения произошли'`.
 
 6. История коммитов
-Вывести историю коммитов (по умолчанию в обратном порядке) `git log`.
+Вывести историю коммитов (по умолчанию в обратном порядке) `git log`. Сокращенный хеш `git log --oneline`.
 
 ### SSH
 1. В домашней деректории `cd ~` генерируем SSH-ключ. <br>Согласно инструкции [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) можно сделать командами `ssh-keygen -t ed25519 -C "your_email@example.com"` или `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
@@ -37,3 +37,10 @@
 2. В локальном репозитории проекта *my_project* выполнить команду `git remote add origin git@github.com:%ИМЯ_АККАУНТА%/my_project.git`
 
 3. Направить изменения в удаленный репозиторий `git push -u origin main` или `git push -u origin master`. Для последующих изменений `git push`
+
+### Статус фаила
+untracked
+tracked
+staged
+modified
+
