@@ -71,7 +71,7 @@ stateDiagram-v2
     State2 --> State3: git commit
     State3 --> State4: diff changes in file
     State4 --> State2: git add
-    State2 -.-> State4: git add
+    State2 --> State4: git add
 
 ```
 
