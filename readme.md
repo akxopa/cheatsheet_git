@@ -59,6 +59,22 @@ graph LR;
 %%    staged/tracked -- "diff changes in file" --> modified;
 ```
 
+Схема создается с помощью [Mermaid](http://mermaid.js.org). Для быстрого погружения как нарисовать свою первую диаграму можно прочитать на [Хабре](https://habr.com/ru/articles/652867/).
+
+```mermaid
+stateDiagram-v2
+    State1: untrecked
+    State2: staged/tracked
+    State3: tracked
+    State4: modified
+    State1 --> State2: git add
+    State2 --> State3: git commit
+    State3 --> State4: diff changes in file
+    State4 --> State2: git add
+    State2 -.-> State4: git add
+
+```
+
 ### Сообщение к коммитам
 Придерживайся одного сообщения стиля в проекте.
 
