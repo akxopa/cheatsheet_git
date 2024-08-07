@@ -20,6 +20,10 @@
 5. Коммит.<br>
 `git commit -m 'Какие изменения произошли'`.
 
+Хеш — основной идентификатор коммита. Git хеширует информацию о коммите с помощью алгоритма SHA-1 и получает для каждого коммита свой уникальный хеш — результат хеширования.
+
+Вместо хеша последнего коммита можно написать слово `HEAD`.
+
 6. История коммитов
 Вывести историю коммитов (по умолчанию в обратном порядке) `git log`. Сокращенный хеш `git log --oneline`.
 
@@ -39,8 +43,37 @@
 3. Направить изменения в удаленный репозиторий `git push -u origin main` или `git push -u origin master`. Для последующих изменений `git push`
 
 ### Статус фаила
-untracked
-tracked
-staged
-modified
 
+- untracked
+- tracked
+- staged
+- modified
+
+```mermaid
+%% описание схемы
+graph LR;
+    untrecked -- "git add" --> staged/tracked;
+    staged/tracked -- "git commit" --> tracked;
+    tracked -- "diff changes in file" --> modified;
+    modified -- "git add" --> staged/tracked;
+%%    staged/tracked -- "diff changes in file" --> modified;
+```
+
+### Сообщение к коммитам
+Придерживайся одного сообщения стиля в проекте.
+
+#### Conventional Commits
+
+Общий вид: `<type>: <сообщение>` <br>
+где *type* может принимать значениея `feat` или `fix`
+
+Подробнее можно узнать в [спецификации](https://www.conventionalcommits.org/ru/v1.0.0-beta.4/#спецификация)
+
+#### Корпоративный
+
+Общий вид: `<Jira-ID>: <сообщение>` <br>
+где *Jira-ID* идентификатор задачи проекта
+
+#### GitHub-стиль
+
+Общий вид: `#<номер задачи> <сообщение>`.
