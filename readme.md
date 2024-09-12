@@ -22,7 +22,7 @@
 Хеш — основной идентификатор коммита. Git хеширует информацию о коммите с помощью алгоритма SHA-1 и получает для каждого коммита свой уникальный хеш — результат хеширования. Вместо хеша последнего коммита можно написать слово `HEAD`.
 
 6. История коммитов
-Вывести историю коммитов (по умолчанию в обратном порядке) `git log`. Сокращенный хеш `git log --oneline`.
+Вывести историю коммитов (по умолчанию в обратном порядке) `git log`. Сокращенный хеш `git log --oneline` или `git log --graph --oneline`.
 
 ### SSH
 1. В домашней деректории `cd ~` генерируем SSH-ключ. <br>Согласно инструкции [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) можно сделать командами `ssh-keygen -t ed25519 -C "your_email@example.com"` или `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`
@@ -171,3 +171,68 @@ $ git push -u origin my-branch # отправили ветку my-branch в уд
 
 ```
 Удалить привязанный origin `git remote rm origin`.
+
+### Режимы слияния
+
+Состояне fast-forward: при слиянии не возможен конфликт, истории двух веток не расходятся и одна ветка является продолжением другой.
+
+Fast-forward слияние веток можно отключить флагом `--no-ff`. 
+
+Например:
+
+```bash
+# находимся в ветке main
+# --no-edit отключает ввод сообщения для merge-коммита
+# --no-ff отключает fast-forward слияние веток
+$ git merge --no-edit --no-ff add-docs
+Merge made by the 'ort' strategy.
+ docs.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 docs.txt
+
+# с флагом --graph
+# Git нарисует ветки с помощью «палочек» и «звёздочек»
+# получившийся коммит слияния: 6814789
+$ git log --graph --oneline
+*   6814789 (HEAD -> main) Merge branch 'add-docs'
+|\
+| * e08fa2a (add-docs) New docs 2
+| * fd588b2 New docs 1
+|/
+* 997d9ce Commit 4
+* 0313e8e Commit 3
+* 5848aba Commit 2
+* 04923d7 Commit 1 
+
+```
+
+При слиянии не-fast-forward создается коммит слияния
+
+```bash
+# находимся в ветке main
+# --no-edit избавляет от необходимости
+# вводить сообщение для merge-коммита
+$ git merge --no-edit add-docs
+Merge made by the 'ort' strategy.
+ docs.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 docs.txt
+
+# коммит слияния: 34f5f8f
+$ git log --graph --oneline
+*   34f5f8f (HEAD -> main) Merge branch 'add-docs'
+|\
+| * 8de42eb (add-docs) New docs 2
+| * 4d3c346 New docs 1
+* | 15d3f04 Commit 5
+|/
+* 73def1e Commit 4
+* 9c30ab3 Commit 3
+* 83cc5ec Commit 2
+* 8e87fb2 Commit 1 
+
+```
+
+При *git push* и *не-fast-forward*. Рзешение конфликта с помощью: 
+1. rebase
+2. git push --force
